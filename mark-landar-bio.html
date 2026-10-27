@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Mark Joseph Landar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg1: #fff1e6;
+    --bg2: #ffe0f0;
+    --bg3: #e4f3ff;
+    --surface: #ffffffee;
+    --text: #241b2e;
+    --text-soft: #6b5d78;
+    --p1: #ff6ec7;
+    --p2: #7c5cff;
+    --p3: #00d4ff;
+    --p4: #ffd166;
+    --border: #eadffb;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg1: #1a0f2e;
+      --bg2: #2a0f3a;
+      --bg3: #0f1f3a;
+      --surface: #1f1630ee;
+      --text: #fbeeff;
+      --text-soft: #c3aede;
+      --p1: #ff7fd4;
+      --p2: #9b7fff;
+      --p3: #45e4ff;
+      --p4: #ffe08a;
+      --border: #3a2a55;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg1: #1a0f2e;
+    --bg2: #2a0f3a;
+    --bg3: #0f1f3a;
+    --surface: #1f1630ee;
+    --text: #fbeeff;
+    --text-soft: #c3aede;
+    --p1: #ff7fd4;
+    --p2: #9b7fff;
+    --p3: #45e4ff;
+    --p4: #ffe08a;
+    --border: #3a2a55;
+    color-scheme: dark;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0;
+    padding: 0;
+    color: var(--text);
+    overflow-x: hidden;
+  }
+  body {
+    font-family: 'Space Grotesk', 'Segoe UI', sans-serif;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    min-height: 100%;
+    background: linear-gradient(135deg, var(--bg1), var(--bg2) 45%, var(--bg3));
+    background-size: 300% 300%;
+    animation: bgShift 14s ease infinite;
+    position: relative;
+  }
+  @keyframes bgShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  .blob {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(50px);
+    opacity: 0.45;
+    z-index: 0;
+    pointer-events: none;
+  }
+  .blob1 { width: 220px; height: 220px; background: var(--p1); top: -60px; left: -60px; animation: float1 11s ease-in-out infinite; }
+  .blob2 { width: 260px; height: 260px; background: var(--p3); bottom: -80px; right: -70px; animation: float2 13s ease-in-out infinite; }
+  .blob3 { width: 160px; height: 160px; background: var(--p4); top: 40%; right: -50px; animation: float1 9s ease-in-out infinite reverse; }
+  @keyframes float1 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(20px,30px) scale(1.1); } }
+  @keyframes float2 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(-25px,-20px) scale(1.08); } }
+
+  .wrap {
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 56px 20px 60px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px) scale(0.97);
+    transition: opacity 0.65s cubic-bezier(.34,1.56,.64,1), transform 0.65s cubic-bezier(.34,1.56,.64,1);
+  }
+  .reveal.in { opacity: 1; transform: translateY(0) scale(1); }
+
+  .badge {
+    display: block;
+    width: fit-content;
+    margin: 0 auto 18px;
+    padding: 7px 16px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--p1), var(--p2));
+    color: #fff;
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 600;
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    box-shadow: 0 6px 18px rgba(124,92,255,0.35);
+    animation: pulseBadge 2.4s ease-in-out infinite;
+  }
+  @keyframes pulseBadge {
+    0%,100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+  }
+
+  .name {
+    text-align: center;
+    font-family: 'Fredoka', sans-serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    margin: 0 0 6px;
+    background: linear-gradient(90deg, var(--p2), var(--p1) 50%, var(--p3));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    background-size: 200% auto;
+    animation: shine 5s linear infinite;
+  }
+  @keyframes shine {
+    0% { background-position: 0% center; }
+    100% { background-position: 200% center; }
+  }
+  .tagline {
+    text-align: center;
+    color: var(--text-soft);
+    font-size: 1rem;
+    font-weight: 500;
+    margin: 0 0 6px;
+  }
+  .location {
+    text-align: center;
+    color: var(--text-soft);
+    font-size: 0.78rem;
+    margin: 0 0 28px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    opacity: 0.8;
+  }
+  .bio {
+    background: var(--surface);
+    backdrop-filter: blur(6px);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 20px 22px;
+    font-size: 0.96rem;
+    line-height: 1.6;
+    color: var(--text);
+    margin-bottom: 24px;
+    box-shadow: 0 10px 28px rgba(124,92,255,0.12);
+  }
+  .bio b { color: var(--p2); }
+
+  .section-label {
+    font-family: 'Fredoka', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-soft);
+    margin: 0 4px 12px;
+  }
+
+  .chips { display: flex; flex-wrap: wrap; gap: 9px; margin: 0 0 10px; }
+  .chip {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-size: 0.84rem;
+    font-weight: 500;
+    padding: 9px 15px;
+    border-radius: 999px;
+    cursor: pointer;
+    user-select: none;
+    transition: transform 0.25s cubic-bezier(.34,1.56,.64,1), background 0.25s ease, box-shadow 0.25s ease, color 0.25s ease;
+  }
+  .chip:active { transform: scale(0.92) rotate(-2deg); }
+  .chip.active {
+    background: linear-gradient(90deg, var(--p1), var(--p2));
+    color: #fff;
+    border-color: transparent;
+    box-shadow: 0 8px 20px rgba(255,110,199,0.35);
+    transform: scale(1.05) rotate(1deg);
+  }
+  .chip-detail {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 0.45s cubic-bezier(.22,1,.36,1), opacity 0.35s ease, margin 0.45s ease;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    font-size: 0.86rem;
+    line-height: 1.55;
+    color: var(--text-soft);
+  }
+  .chip-detail.open { max-height: 200px; opacity: 1; padding: 14px 18px; margin-bottom: 26px; }
+
+  hr.divider {
+    border: none;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--border), transparent);
+    margin: 32px 0;
+  }
+
+  .awards { margin-bottom: 10px; }
+  .award-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    margin-bottom: 10px;
+    overflow: hidden;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s cubic-bezier(.34,1.56,.64,1);
+  }
+  .award-item.open {
+    border-color: var(--p2);
+    box-shadow: 0 10px 26px rgba(124,92,255,0.18);
+    transform: scale(1.015);
+  }
+  .award-head { display: flex; align-items: center; gap: 12px; padding: 15px 16px; cursor: pointer; user-select: none; }
+  .medal { font-size: 1.2rem; flex-shrink: 0; }
+  .award-title { flex: 1; font-size: 0.91rem; font-weight: 600; font-family: 'Fredoka', sans-serif; }
+  .chevron { font-size: 0.75rem; color: var(--p2); transition: transform 0.4s cubic-bezier(.34,1.56,.64,1); flex-shrink: 0; }
+  .award-item.open .chevron { transform: rotate(180deg) scale(1.2); }
+  .award-body { max-height: 0; overflow: hidden; transition: max-height 0.4s cubic-bezier(.22,1,.36,1); }
+  .award-body-inner { padding: 0 16px 16px 44px; font-size: 0.83rem; line-height: 1.55; color: var(--text-soft); }
+
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 26px; }
+  .stat {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 16px 8px;
+    text-align: center;
+    transition: transform 0.3s cubic-bezier(.34,1.56,.64,1);
+  }
+  .stat:active { transform: scale(0.95); }
+  .stat-num {
+    font-family: 'Fredoka', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    display: block;
+    background: linear-gradient(90deg, var(--p1), var(--p3));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .stat-label { font-size: 0.66rem; color: var(--text-soft); text-transform: uppercase; letter-spacing: 0.05em; margin-top: 3px; font-weight: 500; }
+
+  .quote-box {
+    background: linear-gradient(135deg, var(--surface), var(--surface));
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 22px;
+    margin-bottom: 26px;
+    text-align: center;
+    min-height: 96px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .quote-box::before {
+    content: "✨";
+    position: absolute;
+    top: 10px; left: 14px;
+    font-size: 1rem;
+    opacity: 0.6;
+  }
+  .quote-text {
+    font-family: 'Fredoka', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--text);
+    line-height: 1.5;
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+  .quote-dots { display: flex; justify-content: center; gap: 7px; margin-top: 14px; }
+  .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--border); cursor: pointer; transition: background 0.3s ease, transform 0.3s cubic-bezier(.34,1.56,.64,1); }
+  .dot.active { background: linear-gradient(90deg, var(--p1), var(--p2)); transform: scale(1.4); }
+
+  .theme-toggle {
+    position: fixed;
+    top: calc(16px + env(safe-area-inset-top, 0px));
+    right: 16px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 1.05rem;
+    z-index: 20;
+    transition: transform 0.4s cubic-bezier(.34,1.56,.64,1), box-shadow 0.3s ease;
+    box-shadow: 0 6px 16px rgba(124,92,255,0.18);
+  }
+  .theme-toggle:active { transform: scale(0.8) rotate(90deg); }
+
+  .vibe-check {
+    text-align: center;
+    font-family: 'Fredoka', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--p2);
+    margin: 0 0 8px;
+    cursor: pointer;
+    user-select: none;
+    letter-spacing: 0.02em;
+    transition: transform 0.2s ease;
+  }
+  .vibe-check:active { transform: scale(0.94); }
+
+  footer {
+    text-align: center;
+    font-size: 0.76rem;
+    color: var(--text-soft);
+    margin-top: 34px;
+    letter-spacing: 0.03em;
+    font-weight: 500;
+  }
+
+  .confetti {
+    position: fixed;
+    top: -10px;
+    font-size: 1.1rem;
+    pointer-events: none;
+    z-index: 30;
+    animation: fall linear forwards;
+  }
+  @keyframes fall {
+    to { transform: translateY(110vh) rotate(360deg); opacity: 0.2; }
+  }
+</style>
+</head>
+<body>
+
+<div class="blob blob1"></div>
+<div class="blob blob2"></div>
+<div class="blob blob3"></div>
+
+<div class="theme-toggle" id="themeToggle" title="Toggle theme">🌓</div>
+
+<div class="wrap">
+
+  <span class="badge reveal">✨ main character energy</span>
+
+  <h1 class="name reveal">Mark Joseph Alcos Landar</h1>
+  <p class="tagline reveal">BSIT 🧠 · Biz Analytics &amp; Management · UI/UX Designer 🎨</p>
+  <p class="location reveal">Pavia, Iloilo, Philippines 📍</p>
+
+  <div class="bio reveal">
+    3rd year BSIT bestie, 20 and <b>thriving</b>, Student Council certified. Chief Layout Editor at the Pavia Gazette, a debater with <b>zero chill</b> in the best way, and a UI/UX designer who speaks fluent grids and pixels. Lowkey obsessed with politics, English literature, and novels — it's giving well-read, well-argued, well-designed. No cap. 💅
+  </div>
+
+  <p class="vibe-check reveal" id="vibeCheck">🎉 tap for a vibe check</p>
+
+  <div class="stats reveal">
+    <div class="stat"><span class="stat-num" data-target="3">0</span><span class="stat-label">Year Level</span></div>
+    <div class="stat"><span class="stat-num" data-target="20">0</span><span class="stat-label">Years Young</span></div>
+    <div class="stat"><span class="stat-num" data-target="9">0</span><span class="stat-label">W's Secured</span></div>
+  </div>
+
+  <p class="section-label reveal">The Whole Vibe — tap to unpack</p>
+  <div class="chips reveal">
+    <span class="chip" data-detail="Student Council certified. Handles business with the squad, no notes.">🏛️ Student Council</span>
+    <span class="chip" data-detail="Designs interfaces with straight-up rizz — clean flows, no cap, chef's kiss.">💻 UI/UX Design</span>
+    <span class="chip" data-detail="Debate era: quick comebacks, sharp arguments, built different on the mic.">🎤 Debate</span>
+    <span class="chip" data-detail="Stays locked in on politics — informed and never afraid to have an opinion.">🗳️ Politics</span>
+    <span class="chip" data-detail="Lit major energy without the major — novels and English lit hit different.">📚 Literature &amp; Novels</span>
+    <span class="chip" data-detail="Chief Layout Editor, Pavia Gazette. The pages? Immaculate. Say less.">📰 Layout Editing</span>
+  </div>
+  <div class="chip-detail" id="chipDetail"></div>
+
+  <hr class="divider reveal">
+
+  <p class="section-label reveal">Receipts &amp; Flexes — tap to open</p>
+  <div class="awards reveal">
+    <div class="award-item">
+      <div class="award-head">
+        <span class="medal">🥇</span>
+        <span class="award-title">46th Catholic Mass Media Awards 2024</span>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="award-body"><div class="award-body-inner">First place energy: Best Newspaper Action Photos, Best Development Communication Page, Best Inside Page Layout. It's the drip for me. 🏆</div></div>
+    </div>
+    <div class="award-item">
+      <div class="award-head">
+        <span class="medal">🥈</span>
+        <span class="award-title">Second Place Honors</span>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="award-body"><div class="award-body-inner">Best Newspaper Editorial Cartoon, Best News Stories, Best Opinion/Column Articles. Still a certified dub. ✌️</div></div>
+    </div>
+    <div class="award-item">
+      <div class="award-head">
+        <span class="medal">🎓</span>
+        <span class="award-title">Academic Honors</span>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="award-body"><div class="award-body-inner">Graduated With High Honor. Mayor Academic Excellence Award (Mayor Luigi G. Gorriceta). Built different, fr. 🧠</div></div>
+    </div>
+    <div class="award-item">
+      <div class="award-head">
+        <span class="medal">🔬</span>
+        <span class="award-title">Research Recognition</span>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="award-body"><div class="award-body-inner">Best in Research Innovation — Panalawsaw 2024. 3rd Place Research Presenter. R-te Very. 2.0 Participant. RSBC Qualifier. Big brain hours. 🧪</div></div>
+    </div>
+    <div class="award-item">
+      <div class="award-head">
+        <span class="medal">🎬</span>
+        <span class="award-title">3rd Best Short Film Award</span>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="award-body"><div class="award-body-inner">Cinematic rizz, fully recognized. 🎥</div></div>
+    </div>
+    <div class="award-item">
+      <div class="award-head">
+        <span class="medal">🌟</span>
+        <span class="award-title">Leadership &amp; Performance</span>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="award-body"><div class="award-body-inner">Outstanding Leadership Award. Excellent Performance in Work Immersion. The aura is unmatched. 🌟</div></div>
+    </div>
+  </div>
+
+  <hr class="divider reveal">
+
+  <p class="section-label reveal">Say It Louder</p>
+  <div class="quote-box reveal">
+    <div class="quote-text" id="quoteText">"Somewhere between a layout grid and a good book — and thriving in both."</div>
+    <div class="quote-dots" id="quoteDots"></div>
+  </div>
+
+  <footer class="reveal">Mark Joseph Alcos Landar — Pavia, Iloilo, Philippines 🌸</footer>
+
+</div>
+
+<script>
+(function() {
+  var root = document.documentElement;
+  var toggle = document.getElementById('themeToggle');
+  toggle.addEventListener('click', function() {
+    var current = root.getAttribute('data-theme');
+    if (current === 'dark') { root.setAttribute('data-theme', 'light'); }
+    else if (current === 'light') { root.removeAttribute('data-theme'); }
+    else { root.setAttribute('data-theme', 'dark'); }
+  });
+
+  var revealEls = document.querySelectorAll('.reveal');
+  var io = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.15 });
+  revealEls.forEach(function(el, i) {
+    el.style.transitionDelay = (Math.min(i, 10) * 0.06) + 's';
+    io.observe(el);
+  });
+
+  var chips = document.querySelectorAll('.chip');
+  var detailBox = document.getElementById('chipDetail');
+  chips.forEach(function(chip) {
+    chip.addEventListener('click', function() {
+      var isActive = chip.classList.contains('active');
+      chips.forEach(function(c) { c.classList.remove('active'); });
+      if (isActive) {
+        detailBox.classList.remove('open');
+        setTimeout(function() { detailBox.textContent = ''; }, 350);
+      } else {
+        chip.classList.add('active');
+        detailBox.textContent = chip.getAttribute('data-detail');
+        detailBox.classList.add('open');
+      }
+    });
+  });
+
+  var awardItems = document.querySelectorAll('.award-item');
+  awardItems.forEach(function(item) {
+    var head = item.querySelector('.award-head');
+    var body = item.querySelector('.award-body');
+    head.addEventListener('click', function() {
+      var isOpen = item.classList.contains('open');
+      awardItems.forEach(function(other) {
+        other.classList.remove('open');
+        other.querySelector('.award-body').style.maxHeight = null;
+      });
+      if (!isOpen) {
+        item.classList.add('open');
+        body.style.maxHeight = body.scrollHeight + 'px';
+      }
+    });
+  });
+
+  var statNums = document.querySelectorAll('.stat-num');
+  var statIo = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (!entry.isIntersecting) return;
+      var el = entry.target;
+      var target = parseInt(el.getAttribute('data-target'), 10);
+      var startTime = null;
+      var duration = 900;
+      function step(ts) {
+        if (!startTime) startTime = ts;
+        var progress = Math.min((ts - startTime) / duration, 1);
+        var eased = 1 - Math.pow(1 - progress, 3);
+        el.textContent = Math.round(eased * target);
+        if (progress < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+      statIo.unobserve(el);
+    });
+  }, { threshold: 0.4 });
+  statNums.forEach(function(el) { statIo.observe(el); });
+
+  var quotes = [
+    '"Somewhere between a layout grid and a good book — and thriving in both."',
+    '"A solid argument is just a well-designed interface for an idea. Fr."',
+    '"Student council by duty, debater by instinct, designer by habit. Triple threat."',
+    '"Politics, literature, pixels — different pages, same unmatched curiosity."'
+  ];
+  var quoteText = document.getElementById('quoteText');
+  var dotsWrap = document.getElementById('quoteDots');
+  var qIndex = 0;
+  quotes.forEach(function(_, i) {
+    var dot = document.createElement('div');
+    dot.className = 'dot' + (i === 0 ? ' active' : '');
+    dot.addEventListener('click', function() { showQuote(i); });
+    dotsWrap.appendChild(dot);
+  });
+  function showQuote(i) {
+    qIndex = i;
+    quoteText.style.opacity = 0;
+    quoteText.style.transform = 'translateY(6px)';
+    setTimeout(function() {
+      quoteText.textContent = quotes[qIndex];
+      quoteText.style.opacity = 1;
+      quoteText.style.transform = 'translateY(0)';
+    }, 220);
+    Array.from(dotsWrap.children).forEach(function(d, di) { d.classList.toggle('active', di === i); });
+  }
+  setInterval(function() { showQuote((qIndex + 1) % quotes.length); }, 4200);
+
+  var vibeMessages = ['✅ rizz confirmed', '💯 certified W', '🔥 immaculate vibes', '✨ main character unlocked'];
+  var vibeEl = document.getElementById('vibeCheck');
+  var emojis = ['🎉','✨','💫','🌟','🎊'];
+  vibeEl.addEventListener('click', function() {
+    vibeEl.textContent = vibeMessages[Math.floor(Math.random() * vibeMessages.length)];
+    for (var i = 0; i < 14; i++) {
+      var c = document.createElement('div');
+      c.className = 'confetti';
+      c.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+      c.style.left = Math.random() * 100 + 'vw';
+      c.style.animationDuration = (1.6 + Math.random() * 1.2) + 's';
+      c.style.fontSize = (0.8 + Math.random() * 0.8) + 'rem';
+      document.body.appendChild(c);
+      (function(el) { setTimeout(function() { el.remove(); }, 3000); })(c);
+    }
+    setTimeout(function() { vibeEl.textContent = '🎉 tap for a vibe check'; }, 2600);
+  });
+})();
+</script>
+</body>
+</html>
